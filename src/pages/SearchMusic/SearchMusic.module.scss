@@ -1,0 +1,12 @@
+.wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  background: rgb(3, 0, 255);
+  background: radial-gradient(circle, #8540a6 0%, #642881 61%, #410f59 97%);
+}
+.exit {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}

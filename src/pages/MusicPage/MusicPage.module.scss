@@ -1,0 +1,14 @@
+.wrapper {
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+}
+.list_wrapper {
+  display: flex;
+  align-items: center;
+}
+.exit {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+}

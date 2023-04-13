@@ -1,0 +1,84 @@
+.logWrapper {
+  width: 200px;
+}
+.userMenu {
+  height: 100%;
+  position: relative;
+  .userName {
+    font-size: 16px;
+  }
+  &_img {
+    height: 90px;
+    position: relative;
+    z-index: 50;
+    margin-top: 3px;
+    cursor: pointer;
+  }
+  .popup {
+    transition: 0.15s;
+    padding: 5px;
+    color: black;
+    width: 220px;
+    height: 80px;
+    background-color: white;
+    border-radius: 12px;
+    position: absolute;
+    top: 8px;
+    left: 45px;
+    .container {
+      overflow: hidden;
+      float: right;
+      width: 150px;
+    }
+  }
+}
+.login {
+  border-radius: 0px 20px 20px 0;
+  display: flex;
+  height: 100%;
+  width: 150px;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  background: rgba(0, 0, 0, 0.312);
+  color: #7c96e5;
+  transition: 0.3s;
+
+  &:hover {
+    width: 180px;
+  }
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

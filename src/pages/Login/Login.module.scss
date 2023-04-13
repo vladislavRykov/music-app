@@ -1,0 +1,148 @@
+.login_wrap {
+  background: url('../../assets/allMusicBG.jpg');
+  position: relative;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+}
+.login_container {
+  border-radius: 15px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 5px 1px black;
+  padding: 40px 20px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+
+  .error_underLine {
+    border-bottom: 2px solid rgb(224, 23, 23);
+  }
+
+  .normal_underLine {
+    border-bottom: 2px solid rgb(206, 189, 189);
+  }
+
+  .input_field {
+    padding: 12px 5px;
+    font-weight: 700;
+    font-size: 18px;
+    height: 20px;
+    background-color: transparent;
+    &:valid ~ label,
+    &:focus ~ label {
+      top: -20px;
+      font-size: 15px;
+      color: gray;
+    }
+  }
+  label {
+    transition: 0.3s;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 5px;
+  }
+  p {
+    font-size: 15px;
+    height: 15px;
+    color: #f31717;
+    padding-left: 5px;
+  }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  .submit {
+    background-color: skyblue;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 4px 0px;
+    font-size: 25px;
+    color: white;
+    transition: 0.3s;
+    &:hover {
+      color: skyblue;
+      background-color: white;
+      border: 1px solid skyblue;
+    }
+    &:active {
+      background-color: skyblue;
+    }
+  }
+}
+.registration_link {
+  color: white;
+  border-radius: 25px;
+  padding: 10px 40px;
+  background: linear-gradient(215deg, #bb4444, #db9999, #f31717);
+  background-size: 600% 600%;
+
+  -webkit-animation: AnimationName 20s ease infinite;
+  -moz-animation: AnimationName 20s ease infinite;
+  animation: AnimationName 20s ease infinite;
+  transition: 0.7s;
+  &:hover {
+    background: #bb4444;
+  }
+}
+.error_field {
+  border-bottom-color: rgb(250, 8, 8);
+}
+.error_submitBtn {
+  background-color: rgb(114, 130, 136);
+  border: 1px solid transparent;
+  color: white;
+  pointer-events: none;
+  // &:hover {
+  //   color: skyblue;
+  //   background-color: white;
+  //   border: 1px solid skyblue;
+  // }
+  // &:active {
+  //   background-color: skyblue;
+  // }
+}
+
+@-webkit-keyframes AnimationName {
+  0% {
+    background-position: 69% 0%;
+  }
+  50% {
+    background-position: 32% 100%;
+  }
+  100% {
+    background-position: 69% 0%;
+  }
+}
+@-moz-keyframes AnimationName {
+  0% {
+    background-position: 69% 0%;
+  }
+  50% {
+    background-position: 32% 100%;
+  }
+  100% {
+    background-position: 69% 0%;
+  }
+}
+@keyframes AnimationName {
+  0% {
+    background-position: 69% 0%;
+  }
+  50% {
+    background-position: 32% 100%;
+  }
+  100% {
+    background-position: 69% 0%;
+  }
+}

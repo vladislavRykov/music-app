@@ -1,0 +1,146 @@
+.wrapper {
+  background: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1613310912_71-p-sinii-anime-fon-estetika-103.jpg')
+    center center / cover no-repeat;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid white;
+  box-shadow: 0px 0px 8px 3px white;
+  position: relative;
+  z-index: 1000;
+  // overflow: hidden;
+  height: 97px;
+}
+.music_wrapper {
+  overflow: hidden;
+  width: 380px;
+}
+.music {
+  position: relative;
+  min-width: 300px;
+  opacity: 1;
+  right: 0;
+  transition: 0.2s linear;
+  background-color: black;
+  color: white;
+  height: fit-content;
+  padding: 10px 20px;
+  border-radius: 0px 0px 0px 30px;
+  &_controls {
+    display: grid;
+    grid-template-areas:
+      'buttons volume'
+      'time time';
+  }
+  &_btns {
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none;
+    grid-area: buttons;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    div {
+      cursor: pointer;
+    }
+  }
+  &_volume {
+    grid-area: volume;
+  }
+  &_range {
+    width: 250px;
+    appearance: none;
+    height: 6px;
+    border: none;
+    &::-webkit-slider-thumb {
+      appearance: none;
+      height: 1px;
+      width: 1px;
+    }
+  }
+  .moving_timeBlock {
+    font-size: 14px;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 50px;
+    height: 18px;
+    top: -22px;
+    left: 0px;
+    background-color: rgba(69, 67, 67, 0.408);
+    border-radius: 5px;
+    text-align: center;
+    line-height: 18px;
+  }
+  &_name {
+    display: block;
+    width: 200px;
+    height: 25px;
+  }
+  &_time {
+    grid-area: time;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-width: 340px;
+  }
+}
+.user_info {
+  color: white;
+  h2 {
+    font-size: 30px;
+    margin-bottom: 6px;
+  }
+  p {
+  }
+}
+.loop {
+  font-size: 24px;
+}
+.input_wrapper {
+  font-size: 0px;
+  position: relative;
+  &:hover .music_range,
+  &:hover .range_value {
+    transform: scaleY(1.2);
+    transition: 0.3s;
+  }
+  &:hover .range_prevalue {
+    transform: scaleY(1.2);
+  }
+  &:hover .moving_timeBlock {
+    opacity: 1;
+  }
+}
+.range_value {
+  // transform: rotateY(1);
+  position: absolute;
+  pointer-events: none;
+  z-index: 107;
+  left: 0;
+  top: 0px;
+  height: 6px;
+  width: 0%;
+  background-color: rgb(97, 96, 96);
+}
+.range_prevalue {
+  position: absolute;
+  pointer-events: none;
+  z-index: 106;
+  left: 0;
+  top: 0px;
+  height: 6px;
+  width: 0%;
+  background-color: rgb(143, 139, 139);
+}
+.cross {
+  cursor: pointer;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+}

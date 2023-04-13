@@ -1,0 +1,140 @@
+.reg_wrap {
+  background: url('../../assets/allMusicBG.jpg');
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+}
+.reg_container {
+  border-radius: 15px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 5px 1px black;
+  padding: 40px 20px;
+  max-width: 500px;
+  width: 100%;
+}
+.input input:valid ~ label,
+.input input:focus ~ label {
+  top: -20px;
+  font-size: 15px;
+  color: gray;
+}
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+  input {
+    padding: 12px 5px;
+    font-weight: 700;
+    font-size: 18px;
+    height: 20px;
+    background-color: transparent;
+  }
+  label {
+    transition: 0.3s;
+    font-size: 20px;
+    position: absolute;
+    top: 0;
+    left: 5px;
+  }
+  p {
+    font-size: 15px;
+    height: 15px;
+    color: #f31717;
+    padding-left: 5px;
+  }
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  .submit {
+    background-color: rgb(235, 157, 135);
+    border: 1px solid transparent;
+    border-radius: 3px;
+    padding: 4px 0px;
+    font-size: 25px;
+    color: white;
+    transition: 0.3s;
+    &:hover {
+      color: rgb(235, 157, 135);
+      background-color: white;
+      border: 1px solid rgb(235, 157, 135);
+    }
+    &:active {
+      background-color: rgb(235, 157, 135);
+    }
+  }
+}
+.error_underLine {
+  border-bottom: 2px solid rgb(224, 23, 23);
+}
+
+.normal_underLine {
+  border-bottom: 2px solid rgb(206, 189, 189);
+}
+.error_submitBtn {
+  background-color: rgb(114, 130, 136);
+  border: 1px solid transparent;
+  color: white;
+  pointer-events: none;
+  // &:hover {
+  //   color: skyblue;
+  //   background-color: white;
+  //   border: 1px solid skyblue;
+  // }
+  // &:active {
+  //   background-color: skyblue;
+  // }
+}
+// .registration_link {
+//   color: white;
+//   border-radius: 25px;
+//   padding: 10px 40px;
+//   background: linear-gradient(215deg, #bb4444, #db9999, #f31717);
+//   background-size: 600% 600%;
+
+//   -webkit-animation: AnimationName 20s ease infinite;
+//   -moz-animation: AnimationName 20s ease infinite;
+//   animation: AnimationName 20s ease infinite;
+//   transition: 0.7s;
+//   &:hover {
+//     background: #bb4444;
+//   }
+// }
+
+// @-webkit-keyframes AnimationName {
+//   0% {
+//     background-position: 69% 0%;
+//   }
+//   50% {
+//     background-position: 32% 100%;
+//   }
+//   100% {
+//     background-position: 69% 0%;
+//   }
+// }
+// @-moz-keyframes AnimationName {
+//   0% {
+//     background-position: 69% 0%;
+//   }
+//   50% {
+//     background-position: 32% 100%;
+//   }
+//   100% {
+//     background-position: 69% 0%;
+//   }
+// }
+// @keyframes AnimationName {
+//   0% {
+//     background-position: 69% 0%;
+//   }
+//   50% {
+//     background-position: 32% 100%;
+//   }
+//   100% {
+//     background-position: 69% 0%;
+//   }
+// }

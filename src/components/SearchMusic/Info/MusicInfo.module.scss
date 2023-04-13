@@ -1,0 +1,52 @@
+.wrapper {
+  padding: 10px 50px 10px 0;
+  width: 35%;
+}
+.info_mainImg {
+  max-width: 500px;
+  position: relative;
+  z-index: 70;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 10px;
+  img {
+    max-width: 100%;
+  }
+  .shade {
+    background-color: rgba(0, 0, 0, 0.545);
+    box-shadow: inset 0px 0px 25px 3px black;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+  span {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 700;
+    letter-spacing: 5px;
+    color: white;
+    position: absolute;
+    display: block;
+    z-index: 100;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+.info_desc {
+  font-size: 20px;
+  color: white;
+  font-weight: 400;
+  word-spacing: 5px;
+  letter-spacing: 1.5px;
+  line-height: 26px;
+}
+.save_song_btn {
+  background-color: rgba(142, 142, 231, 0.468);
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: 700;
+}

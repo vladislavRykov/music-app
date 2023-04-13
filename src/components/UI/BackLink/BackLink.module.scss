@@ -1,0 +1,17 @@
+.backArrow {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h2 {
+    margin-bottom: 5px;
+    font-size: 22px;
+    color: black;
+    text-shadow: 0px 0px 4px white;
+  }
+  .openedDoor {
+    display: none;
+  }
+  .closedDoor {
+    display: block;
+  }
+}
