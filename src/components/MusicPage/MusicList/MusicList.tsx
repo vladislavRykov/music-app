@@ -2,11 +2,23 @@ import React, { useRef, useEffect, useState } from 'react';
 import MusicItem from './MusicItem/MusicItem';
 import s from './MusicList.module.scss';
 import { isEmpty } from 'lodash';
+import { NoMusic } from '../../UI/NoMusic/NoMusic';
+import { IMusicItem } from '../../../types';
 
-export default function MusicList({ musics }) {
-  const [mountedStyles, setMountedStyles] = useState({});
+interface MusicListProps {
+  musics: IMusicItem[] | [];
+}
+
+const MusicList: React.FC<MusicListProps> = ({ musics }) => {
+  const [mountedStyles, setMountedStyles] = useState<
+    | {
+        right: string;
+        opacity: string;
+      }
+    | {}
+  >({});
   const musicElemets = musics.map((el, index) => (
-    <MusicItem key={el.idx} music={el} index={index} mountedStyles={mountedStyles} />
+    <MusicItem key={index} music={el} index={index} mountedStyles={mountedStyles} />
   ));
   useEffect(() => {
     setMountedStyles({
@@ -42,7 +54,10 @@ export default function MusicList({ musics }) {
           slider.current.scrollTop = scrollTop.current - walk;
         }
       }}>
-      <div className={s.music_wrapper}>{musics.length !== 0 ? musicElemets : <div>Пусто</div>}</div>
+      <div className={s.music_wrapper}>
+        {musics.length !== 0 ? musicElemets : <NoMusic className={s.NoMusic} />}
+      </div>
     </div>
   );
-}
+};
+export default MusicList;

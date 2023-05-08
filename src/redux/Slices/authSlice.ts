@@ -4,45 +4,48 @@ import { IAuthState } from '../../types';
 import delay from '../../utils/delay';
 import { IUserData } from './../../types';
 import { totalStopMusic } from './selectedAudioSlice';
+import { AppDispatch } from '../store';
 
-export const registerUser = createAsyncThunk(
-  'auth/registerUserStatus',
-  async (params: { email: string; password: string }, { rejectWithValue }) => {
-    try {
-      const res = await ServerAPI.register(params);
-      if (!(res.statusText === 'OK')) {
-        throw new Error('Неудачный запрос');
-      }
-      localStorage.setItem('token', res.data.accessToken);
-      return res.data as IUserData;
-    } catch (error) {
-      if (error.response) {
-        return rejectWithValue(error?.response.data.message as string);
-      }
-      return rejectWithValue(error.message as string);
+export const registerUser = createAsyncThunk<
+  IUserData,
+  { email: string; password: string },
+  { rejectValue: string }
+>('auth/registerUserStatus', async (params, { rejectWithValue }) => {
+  try {
+    const res = await ServerAPI.register(params);
+    if (!(res.statusText === 'OK')) {
+      throw new Error('Неудачный запрос');
     }
-  },
-);
-export const loginUser = createAsyncThunk(
-  'auth/loginUserStatus',
-  async (params: { email: string; password: string }, { rejectWithValue }) => {
-    try {
-      const res = await ServerAPI.login(params);
-      await delay(500);
-      if (!(res.statusText === 'OK')) {
-        throw new Error('Неудачный запрос');
-      }
-      localStorage.setItem('token', res.data.accessToken);
-      return res.data as IUserData;
-    } catch (error) {
-      if (error.response) {
-        return rejectWithValue(error?.response.data.message as string);
-      }
-      return rejectWithValue(error.message as string);
+    localStorage.setItem('token', res.data.accessToken);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      return rejectWithValue(error?.response.data.message as string);
     }
-  },
-);
-export const refreshUser = createAsyncThunk(
+    return rejectWithValue(error.message as string);
+  }
+});
+export const loginUser = createAsyncThunk<
+  IUserData,
+  { email: string; password: string },
+  { rejectValue: string }
+>('auth/loginUserStatus', async (params, { rejectWithValue }) => {
+  try {
+    const res = await ServerAPI.login(params);
+    await delay(500);
+    if (!(res.statusText === 'OK')) {
+      throw new Error('Неудачный запрос');
+    }
+    localStorage.setItem('token', res.data.accessToken);
+    return res.data;
+  } catch (error) {
+    if (error.response) {
+      return rejectWithValue(error?.response.data.message as string);
+    }
+    return rejectWithValue(error.message as string);
+  }
+});
+export const refreshUser = createAsyncThunk<IUserData, void, { rejectValue: string }>(
   'auth/refreshUserStatus',
   async (_, { rejectWithValue }) => {
     try {
@@ -51,7 +54,7 @@ export const refreshUser = createAsyncThunk(
         throw new Error('Неудачный запрос');
       }
       localStorage.setItem('token', res.data.accessToken);
-      return res.data as IUserData;
+      return res.data;
     } catch (error) {
       if (error.response) {
         return rejectWithValue(error?.response.data.message as string);
@@ -60,25 +63,26 @@ export const refreshUser = createAsyncThunk(
     }
   },
 );
-export const logoutUser = createAsyncThunk(
-  'auth/logoutUserStatus',
-  async (_, { rejectWithValue, dispatch }) => {
-    try {
-      const res = await ServerAPI.logout();
-      await delay(500);
-      if (!(res.statusText === 'OK')) {
-        throw new Error('Неудачный запрос');
-      }
-      localStorage.removeItem('token');
-      dispatch(totalStopMusic());
-    } catch (error) {
-      if (error.response) {
-        return rejectWithValue(error?.response.data.message as string);
-      }
-      return rejectWithValue(error.message as string);
+export const logoutUser = createAsyncThunk<
+  void,
+  void,
+  { rejectValue: string; dispatch: AppDispatch }
+>('auth/logoutUserStatus', async (_, { rejectWithValue, dispatch }) => {
+  try {
+    const res = await ServerAPI.logout();
+    await delay(500);
+    if (!(res.statusText === 'OK')) {
+      throw new Error('Неудачный запрос');
     }
-  },
-);
+    localStorage.removeItem('token');
+    dispatch(totalStopMusic());
+  } catch (error) {
+    if (error.response) {
+      return rejectWithValue(error?.response.data.message as string);
+    }
+    return rejectWithValue(error.message as string);
+  }
+});
 
 const initialState: IAuthState = {
   userData: null,
@@ -91,7 +95,7 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setIsFetching: (state, action) => {
+    setIsFetching: (state, action: PayloadAction<boolean>) => {
       state.isFetching = action.payload;
     },
   },

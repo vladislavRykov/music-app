@@ -19,28 +19,47 @@ import { useKey } from '../../../hooks/useKey';
 export default function MusicPlayer() {
   const navigate = useLocation();
   const dispatch = useAppDispatch();
-  const [audioInfo, musics, isSelected, loop, currentMT] = useAppSelector((state) => [
+  const [audioInfo, musics, userMusic, isSelected, loop, currentMT] = useAppSelector((state) => [
     state.selectedAudio.audioInfo,
     state.allMusic.musics,
+    state.userMusic.musics,
     state.selectedAudio.isSelected,
     state.selectedAudio.loop,
     state.selectedAudio.currentMT,
   ]);
   const audio = useRef<HTMLAudioElement | null>(null);
   const nextSong = () => {
-    dispatch(audioChangeWithTransition(setNextAudio({ audioInfo, musics })));
+    dispatch(
+      audioChangeWithTransition(
+        setNextAudio({ audioInfo, musics: audioInfo?.type === 'globalMusic' ? musics : userMusic }),
+      ),
+    );
   };
   const prevSong = () => {
-    dispatch(audioChangeWithTransition(setPrevAudio({ audioInfo, musics })));
+    dispatch(
+      audioChangeWithTransition(
+        setPrevAudio({ audioInfo, musics: audioInfo?.type === 'globalMusic' ? musics : userMusic }),
+      ),
+    );
   };
   useKey(38, () => prevSong(), []);
   useKey(40, () => nextSong(), []);
   return (
     <div className={s.music_wrapper}>
-      <div style={!isSelected ? { opacity: -1, right: '-220px' } : undefined} className={s.music}>
-        <span className={s.music_name}>{`${audioInfo?.from || ''} - ${
-          audioInfo?.songName || ''
-        }`}</span>
+      <div
+        style={!isSelected ? { opacity: -1, visibility: 'hidden', right: '-220px' } : undefined}
+        className={s.music}>
+        <span className={s.music_name}>
+          <span className={s.music_nameAnimation}>
+            <span className={s.music_animationContainer}>
+              <span className={s.title}>
+                {' '}
+                {`${audioInfo?.from || ''} - ${audioInfo?.songName || ''}`}
+              </span>
+              <span className={s.otherText}>...CHILL MUSIC...</span>
+            </span>
+          </span>
+        </span>
         <div className={s.music_controls}>
           <MusicButtons
             audio={audio}

@@ -1,6 +1,5 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import ava from '../../../assets/ava.png';
 import { useAppSelector } from '../../../hooks/reduxHooks';
 import { logoutUser } from '../../../redux/Slices/authSlice';
 import Loader from '../../UI/Loader/Loader';

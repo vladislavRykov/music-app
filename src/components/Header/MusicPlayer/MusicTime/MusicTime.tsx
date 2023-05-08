@@ -4,14 +4,14 @@ import convertToTime from '../../../../utils/convertToTime';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState, useRef, useEffect } from 'react';
 import { setMusicDuration } from '../../../../redux/Slices/selectedAudioSlice';
-import { useAppSelector } from '../../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 interface MusicTimeProps {
   audio: React.MutableRefObject<HTMLAudioElement | null>;
   currentMT: number;
   isSelected: boolean;
 }
 const MusicTime: React.FC<MusicTimeProps> = ({ audio, currentMT, isSelected }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [musicDur, isChanging] = useAppSelector((state) => [
     state.selectedAudio.musicDur,
     state.selectedAudio.isChanging,

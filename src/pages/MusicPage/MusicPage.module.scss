@@ -1,14 +1,52 @@
 .wrapper {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: 3fr 4fr;
+  grid-template-rows: 500px 150px;
   position: relative;
+  grid-template-areas:
+    'left right'
+    'bottom right';
 }
 .list_wrapper {
+  grid-area: right;
+  display: flex;
+  justify-content: flex-end;
+}
+.info_block {
+  grid-area: left;
+}
+.bottom_block {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0px 30px;
+  grid-area: bottom;
+  .upload_music {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.612);
+    border: 1px solid white;
+    border-radius: 45px;
+    width: 400px;
+    padding: 20px 10px;
+    transition: 0.3s;
+    &:hover {
+      transform: scale(1.06);
+      background-color: black;
+    }
+    &:active {
+      transform: scale(1.1);
+      background-color: white;
+      color: black;
+    }
+  }
 }
+
 .exit {
-  position: absolute;
-  bottom: 20px;
-  left: 20px;
+  max-width: 50px;
 }

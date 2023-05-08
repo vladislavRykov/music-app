@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-export const useKey = (key, cb, dep) => {
+export const useKey = (key: number, cb: () => void, dep: any[]) => {
   const callBackRef = useRef(cb);
   useEffect(() => {
     callBackRef.current = cb;

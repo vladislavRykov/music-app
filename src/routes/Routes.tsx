@@ -1,19 +1,20 @@
-import React, { useEffect } from 'react';
-import s from './Routes.module.scss';
-import { Navigate, Route, Routes, useLocation } from 'react-router-dom';
+import React from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import { useAppSelector } from '../hooks/reduxHooks';
 import { Layout } from '../pages/Layout';
 import { routes } from './RoutesData';
-import { useAppDispatch } from './../hooks/reduxHooks';
-import { resetFilters } from '../redux/Slices/musicSlice';
 
-export const Router: React.FC = () => {
+interface RouterProps {
+  startPageProps: { theme: string; setTheme: React.Dispatch<React.SetStateAction<string>> };
+}
+
+export const Router: React.FC<RouterProps> = ({ startPageProps }) => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
-  const location = useLocation();
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(resetFilters());
-  }, [location]);
+  // const location = useLocation();
+  // const dispatch = useAppDispatch();
+  // useEffect(() => {
+  //   dispatch(resetFilters());
+  // }, [location]);
   return (
     <Routes>
       {routes.map((route) => {
@@ -23,10 +24,11 @@ export const Router: React.FC = () => {
 
         return (
           <Route
+            key={route.path}
             path={route.path}
             element={
               <Layout>
-                <route.element />
+                <route.element {...startPageProps} />
               </Layout>
             }
           />

@@ -1,4 +1,3 @@
-import { Navigate } from 'react-router-dom';
 import { Login } from '../pages/Login/Login';
 import MusicPage from '../pages/MusicPage/MusicPage';
 import { Registration } from '../pages/Registration/Registration';

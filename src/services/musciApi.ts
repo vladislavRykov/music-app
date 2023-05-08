@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { IMusicItem, IUserData } from './../types';
-const BASE_URL = 'http://localhost:4444';
+export const BASE_URL = 'http://localhost:4444';
 
 const instance = axios.create({
   withCredentials: true,
@@ -16,79 +16,95 @@ instance.interceptors.response.use(
   },
   async (error) => {
     const originReq = error.config;
-    console.log(error.response.status);
     if (error.response.status == 401 && error.config && !error.config._isRetry) {
       originReq._isRetry = true;
       try {
-        const res = await axios.post('/refresh', {
-          withCredentials: true,
-          baseURL: BASE_URL,
-        });
+        const res = await axios.post(
+          '/refresh',
+          {},
+          {
+            withCredentials: true,
+            baseURL: BASE_URL,
+          },
+        );
         localStorage.setItem('token', res.data.accessToken);
         return instance.request(originReq);
-      } catch (error) {
-        console.log('не авторизован');
-      }
+      } catch (error) {}
     }
     throw error;
   },
 );
 
+type CreateMusciType = {
+  uploadedBy?: string;
+  songName: string;
+  from: string;
+  source: string;
+  small_img: string;
+  bg_img: string;
+  genre: string;
+};
+type GetMusicArgs = {
+  sortOrder: number;
+  sortField: string;
+  genre: string | null;
+  searchValue: null | string;
+  isShowFav?: boolean;
+};
+
 const ServerAPI = {
-  removeMusicFromFav: (
-    id: string,
-  ): Promise<AxiosResponse<{ status: string; error: null | string }>> => {
-    return instance.post('/delete/user/music', { _id: id });
+  uploadFiles: (files) => {
+    return instance.post<{ smallImgPath: string; bigImgPath: string; audioPath: string }>(
+      '/upload',
+      files,
+    );
   },
-  addMusicToFav: (id: string): Promise<AxiosResponse<{ status: string; error: null | string }>> => {
-    return instance.put('/add/user/music', { _id: id });
+  createMusic: (data: CreateMusciType) => {
+    return instance.post<CreateMusciType>('/user/music/create', data);
   },
-  removeMusic: (id: string): Promise<AxiosResponse<{ status: string; error: null | string }>> => {
-    return instance.post('/delete/music', { _id: id });
+  removeMusicFromFav: (id: string) => {
+    return instance.post<{ status: string; error: null | string }>('/delete/user/music', {
+      _id: id,
+    });
   },
-  addMusic: (id: string): Promise<AxiosResponse<{ status: string; error: null | string }>> => {
-    return instance.put('/add/music', { _id: id });
+  addMusicToFav: (id: string) => {
+    return instance.put<{ status: string; error: null | string }>('/add/user/music', { _id: id });
   },
-  getAllMusic: (sortOrder, sortField, genre, searchValue): Promise<AxiosResponse<IMusicItem[]>> => {
-    return instance.get(
+  removeMusic: (id: string) => {
+    return instance.post<{ status: string; error: null | string }>('/delete/music', { _id: id });
+  },
+  addMusic: (id: string) => {
+    return instance.put<{ status: string; error: null | string }>('/add/music', { _id: id });
+  },
+  getAllMusic: ({ sortOrder, sortField, genre, searchValue }: GetMusicArgs) => {
+    return instance.get<IMusicItem[]>(
       `/music?sortField=${sortField}&sort=${sortOrder}&genre=${genre}&search=${searchValue}`,
     );
   },
-  getAuthAllMusic: (
-    sortOrder,
-    sortField,
-    genre,
-    searchValue,
-  ): Promise<AxiosResponse<IMusicItem[]>> => {
-    return instance.get(
+  getAuthAllMusic: ({ sortOrder, sortField, genre, searchValue }: GetMusicArgs) => {
+    return instance.get<IMusicItem[]>(
       `/auth/music?sortField=${sortField}&sort=${sortOrder}&genre=${genre}&search=${searchValue}`,
     );
   },
-  getUserMusic: (
-    sortOrder,
-    sortField,
-    genre,
-    searchValue,
-    isShowFav,
-  ): Promise<AxiosResponse<IMusicItem[]>> => {
-    return instance.get(
+  getUserMusic: ({ sortOrder, sortField, genre, searchValue, isShowFav }: GetMusicArgs) => {
+    return instance.get<IMusicItem[]>(
       `/user/music?sortField=${sortField}&sort=${sortOrder}&genre=${genre}&search=${searchValue}&isShowOnlyFav=${isShowFav}`,
     );
   },
-  getMusicById: (id) => {
+  getMusicById: (id: string) => {
     return instance.get(`/music/${id}`);
   },
-  register: (data) => {
+  register: (data: { email: string; password: string }) => {
     return instance.post('/register', data);
   },
-  login: (data): Promise<AxiosResponse<IUserData>> => {
-    return instance.post('/login', data);
+  login: (data: { email: string; password: string }) => {
+    return instance.post<IUserData>('/login', data);
   },
   logout: () => {
     return instance.post('/logout');
   },
-  refresh: (): Promise<AxiosResponse<IUserData>> => {
-    return instance.post('/refresh');
+  refresh: () => {
+    return instance.post<IUserData>('/refresh');
   },
 };
 export default ServerAPI;

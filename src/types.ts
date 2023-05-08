@@ -10,6 +10,11 @@ export interface IMusicItem {
   isFav?: boolean;
   isChosen?: boolean;
   chosenByCount?: number;
+  type: 'globalMusic' | 'userMusic';
+}
+export enum MusicListType {
+  USER = 'userMusic',
+  GLOBAL = 'globalMusic',
 }
 export interface IMusicState {
   musics: IMusicItem[] | [];
@@ -17,12 +22,13 @@ export interface IMusicState {
   sortInfo: { sortTitle: string; sortKey: string };
   filters: { catTitle: string; catKey: string | null }[] | [];
   filterGenre: { catTitle: string; catKey: string | null };
-  searchValue: string;
+  searchValue: string | null;
   showOnlyFavSongs: boolean;
   isFetching: boolean;
   errorMessage: null | string;
   status: null | string;
 }
+
 export interface ISelectedMusicState {
   isSelected: boolean;
   audioInfo: IMusicItem | null;
@@ -32,6 +38,10 @@ export interface ISelectedMusicState {
   musicDur: number;
   currentMT: number;
   audioVolume: number;
+}
+export interface IGlobalSettingState {
+  defaultBg: string;
+  selectedBg: null | string;
 }
 export interface IAuthState {
   userData: IUserData | null;

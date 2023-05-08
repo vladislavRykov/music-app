@@ -84,3 +84,51 @@ body {
 img {
   max-width: 100%;
 }
+
+html[data-theme='light'] {
+  --text-main-color: black;
+  --background-main-color: white;
+
+  --menu-main-color: rgb(255, 255, 255);
+  --menu-options-color: white;
+  --menu-options-background-color: #d8769f;
+  --menu-first-circle-background-color: #ec6767;
+  --menu-first-circle-border-color: #f05656;
+  --menu-second-circle-background-color: rgba(255, 255, 255, 0.71);
+  --menu-second-circle-border-color: rgba(255, 255, 255, 0.388);
+
+  --header-background-img: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1613310912_71-p-sinii-anime-fon-estetika-103.jpg');
+
+  --player-background-color: white;
+  --player-main-color: rgb(0, 0, 0);
+  --play-input-color: rgb(216, 207, 207);
+  --player-current-time-color: rgb(118, 117, 117);
+  --player-change-time-color: rgb(161, 156, 156);
+
+  --music-element-color-1: rgba(119, 148, 146, 0.405);
+  --music-element-color-2: #23115e63;
+  // --music-element-color-2: #18084f63;
+}
+html[data-theme='dark'] {
+  --text-main-color: rgb(226, 226, 226);
+  --background-main-color: black;
+
+  --menu-main-color: rgb(73, 15, 15);
+  --menu-options-color: rgb(191, 140, 140);
+  --menu-options-background-color: #5a293d;
+  --menu-first-circle-background-color: #9e1818;
+  --menu-first-circle-border-color: #5a1414;
+  --menu-second-circle-background-color: rgba(162, 162, 162, 0.71);
+  --menu-second-circle-border-color: rgba(161, 161, 161, 0.388);
+
+  --header-background-img: url('https://i.pinimg.com/originals/95/85/b5/9585b518b11a9388541cdb0f24471041.jpg');
+
+  --player-background-color: black;
+  --player-main-color: white;
+  --play-input-color: white;
+  --player-current-time-color: rgb(97, 96, 96);
+  --player-change-time-color: rgb(143, 139, 139);
+
+  --music-element-color-1: rgba(49, 58, 58, 0.405);
+  --music-element-color-2: #15062163;
+}

@@ -2,10 +2,10 @@
   font-size: 25px;
   padding-left: 160px;
   font-weight: 700;
-  color: white;
+  color: var(--menu-options-color);
   line-height: 100px;
   pointer-events: none;
-  background-color: rgb(216, 118, 159);
+  background-color: var(--menu-options-background-color);
   height: 100px;
   width: 350px;
   position: absolute;
