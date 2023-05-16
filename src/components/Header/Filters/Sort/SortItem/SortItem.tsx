@@ -1,11 +1,22 @@
 import React from 'react';
 import s from '../../Filters.module.scss';
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
+import { useAppDispatch } from '../../../../../hooks/reduxHooks';
 import { setSortField } from '../../../../../redux/Slices/musicSlice';
-import cn from 'classnames';
 import { setUserSortField } from '../../../../../redux/Slices/userMusicSlice';
 
-export const SortItem = ({ sortInfo, sortTitle, sortKey, isGlobalMusic }) => {
+interface SortItemProps {
+  sortInfo: { sortTitle: string; sortKey: string };
+  sortTitle: string;
+  sortKey: string;
+  isGlobalMusic: boolean;
+}
+
+export const SortItem: React.FC<SortItemProps> = ({
+  sortInfo,
+  sortTitle,
+  sortKey,
+  isGlobalMusic,
+}) => {
   const dispatch = useAppDispatch();
   const isSelected = sortKey === sortInfo.sortKey;
   const onSortClick = () => {

@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import s from '../Filters.module.scss';
 import { useAppSelector } from '../../../../hooks/reduxHooks';
 import { CatElements } from './CatElement/CatElements';
-export default function Categories({ dispatch, isGlobalMusic }) {
+
+interface CategoriesProps {
+  isGlobalMusic: boolean;
+}
+
+const Categories: React.FC<CategoriesProps> = ({ isGlobalMusic }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const { filters, filterGenre } = useAppSelector((state) =>
     isGlobalMusic ? state.allMusic : state.userMusic,
@@ -32,4 +37,5 @@ export default function Categories({ dispatch, isGlobalMusic }) {
       </h2>
     </div>
   );
-}
+};
+export default Categories;

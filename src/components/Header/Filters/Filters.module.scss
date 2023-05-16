@@ -39,6 +39,7 @@
     cursor: pointer;
     text-align: center;
     width: 200px;
+    padding: 0px 20px;
     font-size: 20px;
     background-color: rgba(92, 204, 214, 0.484);
     box-shadow: inset 0px 0px 6px 3px rgb(157, 232, 238);
@@ -146,6 +147,7 @@
     text-align: center;
     width: 250px;
     font-size: 20px;
+    padding: 0px 20px;
     background-color: rgba(92, 204, 214, 0.484);
     box-shadow: inset 0px 0px 6px 3px rgb(157, 232, 238);
     border-radius: 25px;
@@ -201,6 +203,12 @@
   }
 }
 .search {
+  .MuiAutocomplete-input {
+    color: white;
+  }
+  .MuiAutocomplete-inputFocused {
+    color: white;
+  }
 }
 .toggleFav {
   font-size: 18px;

@@ -114,7 +114,7 @@ export const authSlice = createSlice({
     builder.addCase(registerUser.rejected, (state, action) => {
       state.isFetching = false;
       state.isAuth = false;
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload ? action.payload : null;
     });
     builder.addCase(loginUser.pending, (state) => {
       state.errorMessage = null;
@@ -130,7 +130,7 @@ export const authSlice = createSlice({
     builder.addCase(loginUser.rejected, (state, action) => {
       state.isFetching = false;
       state.isAuth = false;
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload ? action.payload : null;
     });
     builder.addCase(refreshUser.pending, (state) => {
       state.errorMessage = null;
@@ -146,7 +146,7 @@ export const authSlice = createSlice({
     builder.addCase(refreshUser.rejected, (state, action) => {
       state.isFetching = false;
       state.isAuth = false;
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload ? action.payload : null;
     });
     builder.addCase(logoutUser.pending, (state) => {
       state.isFetching = true;
@@ -159,7 +159,7 @@ export const authSlice = createSlice({
     });
     builder.addCase(logoutUser.rejected, (state, action) => {
       state.isFetching = false;
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload ? action.payload : null;
     });
   },
 });

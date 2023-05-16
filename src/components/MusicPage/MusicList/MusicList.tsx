@@ -26,19 +26,21 @@ const MusicList: React.FC<MusicListProps> = ({ musics }) => {
       opacity: '1',
     });
   }, []);
-  const slider = useRef();
-  const isDown = useRef(false);
-  const startY = useRef();
-  const scrollTop = useRef();
+  const slider = useRef<HTMLDivElement>(null);
+  const isDown = useRef<boolean>(false);
+  const startY = useRef<number | null>(null);
+  const scrollTop = useRef<number | null>(null);
   return (
     <div
       style={isEmpty(mountedStyles) ? {} : { opacity: '1' }}
       ref={slider}
       className={s.music_list}
       onMouseDown={(e) => {
-        isDown.current = true;
-        startY.current = e.pageY - slider.current.offsetTop;
-        scrollTop.current = slider.current.scrollTop;
+        if (slider.current) {
+          isDown.current = true;
+          startY.current = e.pageY - slider.current.offsetTop;
+          scrollTop.current = slider.current.scrollTop;
+        }
       }}
       onMouseUp={() => {
         isDown.current = false;
@@ -47,7 +49,7 @@ const MusicList: React.FC<MusicListProps> = ({ musics }) => {
         isDown.current = false;
       }}
       onMouseMove={(e) => {
-        if (isDown.current) {
+        if (isDown.current && slider.current && startY.current && scrollTop.current) {
           e.preventDefault();
           const y = e.pageY - slider.current.offsetTop;
           const walk = y - startY.current;

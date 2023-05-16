@@ -1,13 +1,19 @@
 import React, { useState } from 'react';
 import s from '../Filters.module.scss';
 import { SortItem } from './SortItem/SortItem';
-import { useAppSelector } from '../../../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { BiDownArrowAlt, BiUpArrowAlt } from 'react-icons/bi';
 import { setSortOrder } from '../../../../redux/Slices/musicSlice';
 import { useLocation } from 'react-router-dom';
 import { MusicListType } from '../../../../types';
 import { setUserSortOrder } from '../../../../redux/Slices/userMusicSlice';
-export default function Sort({ dispatch, isGlobalMusic }) {
+
+interface SortProps {
+  isGlobalMusic: boolean;
+}
+
+const Sort: React.FC<SortProps> = ({ isGlobalMusic }) => {
+  const dispatch = useAppDispatch();
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const sortList = [
     { sortTitle: 'По названию', sortKey: 'songName' },
@@ -56,4 +62,5 @@ export default function Sort({ dispatch, isGlobalMusic }) {
       </h2>
     </div>
   );
-}
+};
+export default Sort;

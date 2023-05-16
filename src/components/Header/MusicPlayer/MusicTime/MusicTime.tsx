@@ -22,13 +22,14 @@ const MusicTime: React.FC<MusicTimeProps> = ({ audio, currentMT, isSelected }) =
   const timeInput = useRef<HTMLInputElement | null>(null);
   const currentTimer = convertToTime(currentMT);
   const durationTimer = convertToTime(musicDur);
+
   const onMouseOnInput: React.MouseEventHandler<HTMLInputElement> = (e) => {
-    const offset = (e.nativeEvent.offsetX / e.target.clientWidth) * musicDur;
+    const offset = (e.nativeEvent.offsetX / (e.target as HTMLInputElement).clientWidth) * musicDur;
     const { minutes, seconds } = convertToTime(offset);
     if (offset > 0 && offset <= musicDur) {
       setMouseOnInputTime(`${minutes}:${seconds}`);
       setTimeBlockPosition(e.nativeEvent.offsetX - 25);
-      setPreRangeValue((e.nativeEvent.offsetX / e.target.clientWidth) * 100);
+      setPreRangeValue((e.nativeEvent.offsetX / (e.target as HTMLInputElement).clientWidth) * 100);
     } else if (offset <= 0) {
       setMouseOnInputTime('0:00');
     } else {

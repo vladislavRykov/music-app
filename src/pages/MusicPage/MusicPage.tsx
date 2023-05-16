@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import s from './MusicPage.module.scss';
-import { useDispatch } from 'react-redux';
 import NewLoader from '../../components/UI/Loader/NewLoader';
 import { BackLink } from '../../components/UI/BackLink/BackLink';
-import { useAppSelector } from '../../hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import ServerAPI from '../../services/musciApi';
 import { MusicAddModal } from '../../components/MusicPage/MusicAddModal/MusicAddModal';
 import { fetchUserMusic } from '../../redux/Slices/userMusicSlice';
-import MusicList from '../../components/MusicPage/MusicList/MusicList.tsx';
+import MusicList from './../../components/MusicPage/MusicList/MusicList';
 
 const MusicPage = React.memo(() => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isModalShown, setIsModalShown] = useState(false);
 
   const { musics, isFetching, sortInfo, sortOrder, filterGenre, searchValue, showOnlyFavSongs } =

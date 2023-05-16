@@ -35,3 +35,107 @@
   right: -220px;
   opacity: 1;
 }
+@media screen and (max-width: 800px) {
+  .option {
+    font-size: 20px;
+    padding-left: 115px;
+    line-height: 80px;
+    height: 80px;
+    width: 250px;
+    position: absolute;
+    transition: 0.3s ease-in-out;
+    &:hover {
+      transition: 0.1s linear, color 0.01s linear;
+      right: -140px;
+      background-color: rgb(184, 184, 222);
+    }
+  }
+  .option1 {
+    top: 18%;
+  }
+  .option2 {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .option3 {
+    top: 62%;
+  }
+  .showOptions {
+    pointer-events: all;
+    right: -130px;
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 600px) {
+  .option {
+    font-size: 12px;
+    padding-left: 90px;
+    line-height: 60px;
+    height: 60px;
+    max-width: 180px;
+    &:hover {
+      right: -110px;
+    }
+  }
+  .option1 {
+    top: 18%;
+  }
+  .option2 {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .option3 {
+    top: 62%;
+  }
+  .showOptions {
+    pointer-events: all;
+    right: -100px;
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 500px) {
+  .option {
+    font-size: 11px;
+    padding-left: 105px;
+    line-height: 60px;
+    height: 60px;
+    max-width: 180px;
+    &:hover {
+      right: -80px;
+    }
+  }
+  .showOptions {
+    pointer-events: all;
+    right: -70px;
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 400px) {
+  .option {
+    font-size: 10px;
+    padding-left: 74px;
+    line-height: 50px;
+    height: 50px;
+    width: 140px;
+    &:hover {
+      transition: 0.1s linear, color 0.01s linear;
+      right: -70px;
+      background-color: rgb(184, 184, 222);
+    }
+  }
+  .option1 {
+    top: 18%;
+  }
+  .option2 {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .option3 {
+    top: 62%;
+  }
+  .showOptions {
+    pointer-events: all;
+    right: -60px;
+    opacity: 1;
+  }
+}

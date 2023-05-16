@@ -40,6 +40,7 @@ export const UserAddMusicFav = createAsyncThunk<
     const res = await ServerAPI.addMusicToFav(id);
     return res.data;
   } catch (error) {
+    console.log(error);
     return rejectWithValue(error.response.data);
   }
 });

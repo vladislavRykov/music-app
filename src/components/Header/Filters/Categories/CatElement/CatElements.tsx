@@ -5,7 +5,13 @@ import { useAppDispatch } from '../../../../../hooks/reduxHooks';
 import { setFilterGenre } from '../../../../../redux/Slices/musicSlice';
 import { setUserFilterGenre } from '../../../../../redux/Slices/userMusicSlice';
 
-export const CatElements = ({ genre, filterGenre, isGlobalMusic }) => {
+interface CatElementsProps {
+  genre: { catTitle: string; catKey: string | null };
+  filterGenre: { catTitle: string; catKey: string | null };
+  isGlobalMusic: boolean;
+}
+
+export const CatElements: React.FC<CatElementsProps> = ({ genre, filterGenre, isGlobalMusic }) => {
   const dispatch = useAppDispatch();
   const isSelected = filterGenre.catTitle === genre.catTitle;
   const onCatClick = () => {

@@ -3,8 +3,13 @@ import s from '../Auth.module.scss';
 import ava from '../../../../assets/ava3.webp';
 import { useAppDispatch } from '../../../../hooks/reduxHooks';
 import { logoutUser } from '../../../../redux/Slices/authSlice';
+import { IUserData } from '../../../../types';
 
-export const UserInfo = ({ userData }) => {
+interface UserInfoProps {
+  userData: IUserData | null;
+}
+
+export const UserInfo: React.FC<UserInfoProps> = ({ userData }) => {
   const dispatch = useAppDispatch();
   const [isPopup, setIsPopup] = useState(false);
 

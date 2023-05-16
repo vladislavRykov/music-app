@@ -8,22 +8,24 @@ import { Autocomplete, TextField } from '@mui/material';
 import { Favorities } from './Favorites/Favorities';
 import { useLocation } from 'react-router-dom';
 import { MusicListType } from '../../../types';
+import { useAppDispatch } from '../../../hooks/reduxHooks';
 
-export default function Filters() {
-  const dispatch = useDispatch();
+const Filters: React.FC = () => {
+  const dispatch = useAppDispatch();
   const { pathname } = useLocation();
   const isGlobalMusic = pathname === '/music/all';
 
   return (
     <div className={s.wrapper}>
       <div className={s.catAndFav}>
-        <Categories dispatch={dispatch} isGlobalMusic={isGlobalMusic} />
+        <Categories isGlobalMusic={isGlobalMusic} />
         {pathname === '/music/my' && <Favorities isGlobalMusic={isGlobalMusic} />}
       </div>
       <div className={s.sortAndSearch}>
-        <Sort dispatch={dispatch} isGlobalMusic={isGlobalMusic} />
-        <Search dispatch={dispatch} isGlobalMusic={isGlobalMusic} />
+        <Sort isGlobalMusic={isGlobalMusic} />
+        <Search isGlobalMusic={isGlobalMusic} />
       </div>
     </div>
   );
-}
+};
+export default Filters;

@@ -28,6 +28,7 @@ export const removeMusicFav = createAsyncThunk<
     const res = await ServerAPI.removeMusicFromFav(id);
     return res.data;
   } catch (error) {
+    console.log(error);
     return rejectWithValue(error.response.data);
   }
 });
@@ -68,18 +69,6 @@ export const addMusic = createAsyncThunk<
   }
 });
 
-// const initialState: IMusicState = {
-//   musics: [],
-//   sortOrder: 1,
-//   sortInfo: { sortTitle: 'По названию', sortKey: 'songName' },
-//   filters: [],
-//   filterGenre: { catTitle: 'all', catKey: null },
-//   searchValue: '',
-//   showOnlyFavSongs: false,
-//   isFetching: false,
-//   errorMessage: null,
-//   status: null,
-// };
 const initialState: IMusicState = {
   musics: [],
   sortOrder: 1,
@@ -171,7 +160,7 @@ export const musicSlice = createSlice({
     builder.addCase(fetchMusic.rejected, (state, action) => {
       state.musics = [];
       state.isFetching = false;
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload ? action.payload : null;
     });
     builder.addCase(addMusic.pending, (state) => {
       state.status = null;

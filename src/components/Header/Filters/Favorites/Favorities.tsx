@@ -4,7 +4,11 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/reduxHooks';
 import { setShowOnlyFav } from '../../../../redux/Slices/musicSlice';
 import { setUserShowOnlyFav } from '../../../../redux/Slices/userMusicSlice';
 
-export const Favorities = ({ isGlobalMusic }) => {
+interface FavoritiesProps {
+  isGlobalMusic: boolean;
+}
+
+export const Favorities: React.FC<FavoritiesProps> = ({ isGlobalMusic }) => {
   const dispatch = useAppDispatch();
   const { showOnlyFavSongs } = useAppSelector((state) =>
     isGlobalMusic ? state.allMusic : state.userMusic,

@@ -26,7 +26,7 @@ const MusicVolume: React.FC<MusicVolumeProps> = ({ audio }) => {
         min={0}
         max={100}
         className={s.mui_slider}
-        sx={{ width: 130 }}
+        // sx={{ width: 130 }}
       />
     </div>
   );
