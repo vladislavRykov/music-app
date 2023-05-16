@@ -4,13 +4,14 @@ import { Formik, Form, Field } from 'formik';
 import * as yup from 'yup';
 import { Link, Navigate, useLocation } from 'react-router-dom';
 import ServerAPI from '../../services/musciApi';
+import { LoadingButton } from '@mui/lab';
 import cn from 'classnames';
 import { useAppDispatch, useAppSelector } from './../../hooks/reduxHooks';
 import { loginUser } from '../../redux/Slices/authSlice';
 import { totalStopMusic } from '../../redux/Slices/selectedAudioSlice';
 
 export const Login = () => {
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const { isAuth, isFetching } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
   const validationSchema = yup.object().shape({
     email: yup.string().required('Это поле не должно быть пустым.').email('Введите почту.'),
@@ -33,7 +34,7 @@ export const Login = () => {
             password: '',
           }}
           onSubmit={async (values, { setErrors }) => {
-            const res = await dispatch(loginUser(values));
+            dispatch(loginUser(values));
           }}>
           {({ errors, isSubmitting, touched, isValid }) => (
             <Form className={s.form}>
@@ -67,12 +68,13 @@ export const Login = () => {
                 <p>{errors.password && touched.password && errors.password}</p>
               </div>
 
-              <button
+              <LoadingButton
+                variant="outlined"
+                loading={isFetching}
                 disabled={!isValid || isSubmitting}
-                className={cn(s.submit, { [s.error_submitBtn]: !isValid })}
                 type="submit">
                 Войти
-              </button>
+              </LoadingButton>
             </Form>
           )}
         </Formik>

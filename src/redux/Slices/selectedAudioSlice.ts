@@ -31,25 +31,32 @@ const initialState: ISelectedMusicState = {
   loop: false,
   musicDur: 0,
   currentMT: 0,
-  audioVolume: 0,
+  audioVolume: 0.1,
 };
 
 export const selectedAudioSlice = createSlice({
   name: 'selectedAudio',
   initialState,
   reducers: {
-    setChosen: (state, action) => {
-      state.audioInfo = {
-        ...state.audioInfo,
-        isChosen: action.payload.isChosen,
-        chosenByCount: state.audioInfo?.chosenByCount + action.payload.num,
-      };
+    setChosenSA: (state, action: PayloadAction<{ isChosen: boolean; num: number }>) => {
+      if (state.audioInfo) {
+        state.audioInfo = {
+          ...state.audioInfo,
+          isChosen: action.payload.isChosen,
+          chosenByCount:
+            state.audioInfo?.chosenByCount !== undefined
+              ? state.audioInfo?.chosenByCount + action.payload.num
+              : undefined,
+        };
+      }
     },
-    setFav: (state, action) => {
-      state.audioInfo = {
-        ...state.audioInfo,
-        isFav: action.payload,
-      };
+    setFavSA: (state, action: PayloadAction<boolean>) => {
+      if (state.audioInfo) {
+        state.audioInfo = {
+          ...state.audioInfo,
+          isFav: action.payload,
+        };
+      }
     },
     setAudio: (state, action: PayloadAction<{ music: IMusicItem; idx: number }>) => {
       state.audioInfo = { ...action.payload.music, idx: action.payload.idx };
@@ -79,13 +86,10 @@ export const selectedAudioSlice = createSlice({
       action: PayloadAction<{ musics: IMusicItem[]; audioInfo: IMusicItem | null }>,
     ) => {
       if (state.isSelected) {
-        // const idx = action.payload.musics.findIndex(
-        //   (obj) => obj.id === action.payload?.audioInfo?.id,
-        // );
         const idx = action.payload?.audioInfo?.idx;
-        if (idx !== undefined && idx + 1 == action.payload.musics.length) {
+        if (idx !== undefined && idx + 1 === action.payload.musics.length) {
           state.audioInfo = { ...action.payload.musics[0], idx: 0 };
-        } else if (idx != undefined) {
+        } else if (idx !== undefined) {
           state.audioInfo = { ...action.payload.musics[idx + 1], idx: idx + 1 };
         }
         state.isPaused = false;
@@ -96,16 +100,13 @@ export const selectedAudioSlice = createSlice({
       action: PayloadAction<{ musics: IMusicItem[]; audioInfo: IMusicItem | null }>,
     ) => {
       if (state.isSelected) {
-        // const idx = action.payload.musics.findIndex(
-        //   (obj) => obj.id === action.payload?.audioInfo?.id,
-        // );
         const idx = action.payload?.audioInfo?.idx;
-        if (idx != undefined && idx == 0) {
+        if (idx !== undefined && idx === 0) {
           state.audioInfo = {
             ...action.payload.musics[action.payload.musics.length - 1],
             idx: action.payload.musics.length - 1,
           };
-        } else if (idx != undefined) {
+        } else if (idx !== undefined) {
           state.audioInfo = { ...action.payload.musics[idx - 1], idx: idx - 1 };
         }
       }
@@ -119,7 +120,7 @@ export const selectedAudioSlice = createSlice({
 });
 
 export const {
-  setChosen,
+  setChosenSA,
   setAudio,
   setNextAudio,
   setPaused,
@@ -130,7 +131,7 @@ export const {
   setCurrentMT,
   setAudioVolume,
   stopMusic,
-  setFav,
+  setFavSA,
 } = selectedAudioSlice.actions;
 
 export default selectedAudioSlice.reducer;

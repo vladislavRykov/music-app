@@ -7,10 +7,11 @@ import * as yup from 'yup';
 import { useAppDispatch, useAppSelector } from './../../hooks/reduxHooks';
 import { registerUser } from '../../redux/Slices/authSlice';
 import { Navigate } from 'react-router-dom';
+import { LoadingButton } from '@mui/lab';
 
 export const Registration = () => {
   const dispatch = useAppDispatch();
-  const isAuth = useAppSelector((state) => state.auth.isAuth);
+  const { isAuth, isFetching } = useAppSelector((state) => state.auth);
   const validationSchema = yup.object().shape({
     email: yup.string().required('Это поле не должно быть пустым.').email('Введите почту.'),
     password: yup
@@ -34,7 +35,7 @@ export const Registration = () => {
           onSubmit={(values) => {
             dispatch(registerUser(values));
           }}>
-          {({ errors, touched, isValid }) => (
+          {({ errors, touched, isValid, isSubmitting }) => (
             <Form className={s.form}>
               <div className={s.input}>
                 <Field
@@ -64,19 +65,17 @@ export const Registration = () => {
                 <p>{errors.password && touched.password && errors.password}</p>
               </div>
 
-              <button
-                disabled={!isValid}
-                className={cn(s.submit, { [s.error_submitBtn]: !isValid })}
+              <LoadingButton
+                variant="outlined"
+                loading={isFetching}
+                disabled={!isValid || isSubmitting}
                 type="submit">
                 Зарегистрироваться
-              </button>
+              </LoadingButton>
             </Form>
           )}
         </Formik>
       </div>
-      {/* <Link className={s.registration_link} to={'/register'}>
-        Пройти регистрацию
-      </Link> */}
     </div>
   );
 };

@@ -1,17 +1,37 @@
 import React from 'react';
 import s from '../../Filters.module.scss';
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/reduxHooks';
+import { useAppDispatch } from '../../../../../hooks/reduxHooks';
 import { setSortField } from '../../../../../redux/Slices/musicSlice';
-import cn from 'classnames';
+import { setUserSortField } from '../../../../../redux/Slices/userMusicSlice';
 
-export const SortItem = ({ sortInfo, sortTitle, sortKey }) => {
+interface SortItemProps {
+  sortInfo: { sortTitle: string; sortKey: string };
+  sortTitle: string;
+  sortKey: string;
+  isGlobalMusic: boolean;
+}
+
+export const SortItem: React.FC<SortItemProps> = ({
+  sortInfo,
+  sortTitle,
+  sortKey,
+  isGlobalMusic,
+}) => {
   const dispatch = useAppDispatch();
+  const isSelected = sortKey === sortInfo.sortKey;
   const onSortClick = () => {
-    dispatch(setSortField({ sortTitle, sortKey }));
+    !isSelected &&
+      dispatch(
+        isGlobalMusic
+          ? setSortField({ sortTitle, sortKey })
+          : setUserSortField({ sortTitle, sortKey }),
+      );
   };
   return (
-    <li className={cn(s.sort_item, { [s.sort_selectedItem]: sortKey === sortInfo.sortKey })}>
-      <button onClick={onSortClick}>{sortTitle}</button>
+    <li className={s.sort_item}>
+      <button className={`${s.item_btn} ${isSelected ? s.selectedItem : ''}`} onClick={onSortClick}>
+        {sortTitle}
+      </button>
     </li>
   );
 };

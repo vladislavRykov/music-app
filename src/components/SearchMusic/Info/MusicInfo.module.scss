@@ -1,6 +1,12 @@
 .wrapper {
   padding: 10px 50px 10px 0;
   width: 35%;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .info_mainImg {
   max-width: 500px;
@@ -45,8 +51,20 @@
 }
 .save_song_btn {
   background-color: rgba(142, 142, 231, 0.468);
+  color: var(--text-main-color);
   border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 18px;
+  padding: 8px 14px;
+  font-size: 16px;
   font-weight: 700;
+  margin-bottom: 5px;
+  &:hover {
+    background-color: rgba(87, 87, 245, 0.468);
+  }
+}
+.chosenCount {
+  font-size: 20px;
+  color: rgb(238, 176, 238);
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
 }

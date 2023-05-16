@@ -1,69 +1,73 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
-import { ErrorMessage } from 'formik';
 import ServerAPI from '../../services/musciApi';
 import { IMusicItem, IMusicState } from '../../types';
 import { AxiosResponse } from 'axios';
 
-export const fetchMusic = createAsyncThunk(
-  'musics/fetchMusicStatus',
-  async (cb: () => Promise<AxiosResponse<IMusicItem[]>>, { rejectWithValue }) => {
-    try {
-      const res = await cb();
-      if (!(res.statusText === 'OK')) {
-        throw new Error('Server error');
-      }
-      console.log(res.data);
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error.message);
+export const fetchMusic = createAsyncThunk<
+  IMusicItem[],
+  () => Promise<AxiosResponse<IMusicItem[]>>,
+  { rejectValue: string }
+>('musics/fetchMusicStatus', async (cb, { rejectWithValue }) => {
+  try {
+    const res = await cb();
+    if (!(res.statusText === 'OK')) {
+      throw new Error('Server error');
     }
-  },
-);
+    return res.data;
+  } catch (error) {
+    return rejectWithValue(error.message as string);
+  }
+});
 
-export const removeMusicFav = createAsyncThunk<{ status: string; error?: string }, string>(
-  'musics/removeMusicFavStatus',
-  async (id, { rejectWithValue }) => {
-    try {
-      const res = await ServerAPI.removeMusicFromFav(id);
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data as { status: string; error?: string });
-    }
-  },
-);
-export const addMusicFav = createAsyncThunk<{ status: string; error?: string }, string>(
-  'musics/addMusicFavStatus',
-  async (id, { rejectWithValue }) => {
-    try {
-      const res = await ServerAPI.addMusicToFav(id);
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data as { status: string; error?: string });
-    }
-  },
-);
-export const removeMusic = createAsyncThunk<{ status: string; error?: string }, string>(
-  'musics/removeMusicStatus',
-  async (id, { rejectWithValue }) => {
-    try {
-      const res = await ServerAPI.removeMusic(id);
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data as { status: string; error?: string });
-    }
-  },
-);
-export const addMusic = createAsyncThunk<{ status: string; error?: string }, string>(
-  'musics/addMusicStatus',
-  async (id, { rejectWithValue }) => {
-    try {
-      const res = await ServerAPI.addMusic(id);
-      return res.data;
-    } catch (error) {
-      return rejectWithValue(error.response.data as { status: string; error?: string });
-    }
-  },
-);
+export const removeMusicFav = createAsyncThunk<
+  { status: string; error: null },
+  string,
+  { rejectValue: { status: string; error: string } }
+>('musics/removeMusicFavStatus', async (id, { rejectWithValue }) => {
+  try {
+    const res = await ServerAPI.removeMusicFromFav(id);
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return rejectWithValue(error.response.data);
+  }
+});
+export const addMusicFav = createAsyncThunk<
+  { status: string; error: null },
+  string,
+  { rejectValue: { status: string; error: string } }
+>('musics/addMusicFavStatus', async (id, { rejectWithValue }) => {
+  try {
+    const res = await ServerAPI.addMusicToFav(id);
+    return res.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const removeMusic = createAsyncThunk<
+  { status: string; error: null },
+  string,
+  { rejectValue: { status: string; error: string } }
+>('musics/removeMusicStatus', async (id, { rejectWithValue }) => {
+  try {
+    const res = await ServerAPI.removeMusic(id);
+    return res.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
+export const addMusic = createAsyncThunk<
+  { status: string; error: null },
+  string,
+  { rejectValue: { status: string; error: string } }
+>('musics/addMusicStatus', async (id, { rejectWithValue }) => {
+  try {
+    const res = await ServerAPI.addMusic(id);
+    return res.data;
+  } catch (error) {
+    return rejectWithValue(error.response.data);
+  }
+});
 
 const initialState: IMusicState = {
   musics: [],
@@ -82,6 +86,35 @@ export const musicSlice = createSlice({
   name: 'musics',
   initialState,
   reducers: {
+    setChosenM: (
+      state,
+      action: PayloadAction<{ isChosen: boolean; num: number; musicId: string }>,
+    ) => {
+      state.musics = state.musics.map((el) => {
+        if (action.payload.musicId === el._id) {
+          const update = {
+            ...el,
+            isChosen: action.payload.isChosen,
+            chosenByCount: el.chosenByCount + action.payload.num,
+          };
+          return update;
+        }
+        console.log(el);
+        return el;
+      });
+    },
+    setFavM: (state, action: PayloadAction<{ fav: boolean; musicId: string }>) => {
+      state.musics = state.musics.map((el) => {
+        if (action.payload.musicId === el._id) {
+          const update = {
+            ...el,
+            isFav: action.payload.fav,
+          };
+          return update;
+        }
+        return el;
+      });
+    },
     resetFilters: (state) => {
       state.filters = [];
       state.filterGenre = { catTitle: 'all', catKey: null };
@@ -106,10 +139,6 @@ export const musicSlice = createSlice({
     setMusic: (state, action: PayloadAction<Array<IMusicItem>>) => {
       state.musics = action.payload;
     },
-    // addFavMusic: (state, action: PayloadAction<number>) => {
-    //   const id = state.musics.findIndex((obj) => obj.idx === action.payload);
-    //   state.musics[id].fav = !state.musics[id].fav;
-    // },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchMusic.pending, (state) => {
@@ -131,65 +160,53 @@ export const musicSlice = createSlice({
     builder.addCase(fetchMusic.rejected, (state, action) => {
       state.musics = [];
       state.isFetching = false;
-      state.errorMessage = action.payload;
+      state.errorMessage = action.payload ? action.payload : null;
     });
     builder.addCase(addMusic.pending, (state) => {
-      state.isFetching = true;
       state.status = null;
       state.errorMessage = null;
     });
     builder.addCase(addMusic.fulfilled, (state, action) => {
       state.status = action.payload.status;
       state.errorMessage = null;
-      state.isFetching = false;
     });
     builder.addCase(addMusic.rejected, (state, action) => {
-      state.isFetching = false;
       state.status = action.payload.status;
       state.errorMessage = action.payload.error;
     });
     builder.addCase(removeMusic.pending, (state) => {
-      state.isFetching = true;
       state.status = null;
       state.errorMessage = null;
     });
     builder.addCase(removeMusic.fulfilled, (state, action) => {
       state.status = action.payload.status;
       state.errorMessage = null;
-      state.isFetching = false;
     });
     builder.addCase(removeMusic.rejected, (state, action) => {
-      state.isFetching = false;
       state.status = action.payload.status;
       state.errorMessage = action.payload.error;
     });
     builder.addCase(addMusicFav.pending, (state) => {
-      state.isFetching = true;
       state.status = null;
       state.errorMessage = null;
     });
     builder.addCase(addMusicFav.fulfilled, (state, action) => {
       state.status = action.payload.status;
       state.errorMessage = null;
-      state.isFetching = false;
     });
     builder.addCase(addMusicFav.rejected, (state, action) => {
-      state.isFetching = false;
       state.status = action.payload.status;
       state.errorMessage = action.payload.error;
     });
     builder.addCase(removeMusicFav.pending, (state) => {
-      state.isFetching = true;
       state.status = null;
       state.errorMessage = null;
     });
     builder.addCase(removeMusicFav.fulfilled, (state, action) => {
       state.status = action.payload.status;
       state.errorMessage = null;
-      state.isFetching = false;
     });
     builder.addCase(removeMusicFav.rejected, (state, action) => {
-      state.isFetching = false;
       state.status = action.payload.status;
       state.errorMessage = action.payload.error;
     });
@@ -197,6 +214,8 @@ export const musicSlice = createSlice({
 });
 
 export const {
+  setFavM,
+  setChosenM,
   resetFilters,
   setShowOnlyFav,
   setSearchValue,

@@ -1,6 +1,9 @@
 .wrapper {
-  background: url('https://catherineasquithgallery.com/uploads/posts/2021-02/1613310912_71-p-sinii-anime-fon-estetika-103.jpg')
-    center center / cover no-repeat;
+  transition: background-image 0.3s;
+  background-image: var(--header-background-img);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid white;
@@ -12,16 +15,22 @@
 }
 .music_wrapper {
   overflow: hidden;
-  width: 380px;
 }
 .music {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
   position: relative;
-  min-width: 300px;
+  min-width: 200px;
   opacity: 1;
+  visibility: visible;
   right: 0;
   transition: 0.2s linear;
-  background-color: black;
-  color: white;
+  background-color: var(--player-background-color);
+  color: var(--player-main-color);
   height: fit-content;
   padding: 10px 20px;
   border-radius: 0px 0px 0px 30px;
@@ -49,8 +58,13 @@
   }
   &_volume {
     grid-area: volume;
+    .mui_slider {
+      color: var(--player-current-time-color);
+      width: 130px;
+    }
   }
   &_range {
+    background-color: var(--play-input-color);
     width: 250px;
     appearance: none;
     height: 6px;
@@ -77,9 +91,27 @@
   }
   &_name {
     display: block;
-    width: 200px;
+    width: 300px;
     height: 25px;
+    overflow: hidden;
   }
+  &_nameAnimation {
+    position: relative;
+    display: inline-block;
+    transform: translateX(0);
+    animation: movingText 14s linear reverse infinite;
+    padding-left: 100%;
+    white-space: nowrap;
+    .music_animationContainer {
+      display: flex;
+      justify-content: space-between;
+      gap: 220px;
+      .otherText {
+        font-weight: 700;
+      }
+    }
+  }
+
   &_time {
     grid-area: time;
     font-size: 16px;
@@ -87,7 +119,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    min-width: 340px;
+    // min-width: 340px;
   }
 }
 .user_info {
@@ -99,8 +131,11 @@
   p {
   }
 }
-.loop {
+.loopWrap {
   font-size: 24px;
+  .loop {
+    color: var(--player-main-color);
+  }
 }
 .input_wrapper {
   font-size: 0px;
@@ -126,7 +161,7 @@
   top: 0px;
   height: 6px;
   width: 0%;
-  background-color: rgb(97, 96, 96);
+  background-color: var(--player-current-time-color);
 }
 .range_prevalue {
   position: absolute;
@@ -136,11 +171,53 @@
   top: 0px;
   height: 6px;
   width: 0%;
-  background-color: rgb(143, 139, 139);
+  background-color: var(--player-change-time-color);
 }
 .cross {
   cursor: pointer;
   position: absolute;
   top: 10px;
   right: 20px;
+}
+.heart {
+  color: var(--player-color);
+}
+
+@keyframes movingText {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@media screen and (max-width: 700px) {
+  .music {
+    &_name {
+      // width: 230px;
+    }
+    &_range {
+      width: 200px;
+    }
+    &_time {
+    }
+  }
+}
+@media screen and (max-width: 400px) {
+  .music {
+    &_name {
+      width: 230px;
+    }
+    &_range {
+      width: 150px;
+    }
+    &_volume {
+      .mui_slider {
+        width: 60px;
+      }
+    }
+    &_btns {
+      font-size: 25px;
+    }
+  }
 }

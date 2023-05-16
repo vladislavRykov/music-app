@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './BallOptions.module.scss';
 import cn from 'classnames';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useAppSelector } from '../../../hooks/reduxHooks';
 
 interface PropsT {
@@ -10,7 +10,6 @@ interface PropsT {
 
 const BallOptions: React.FC<PropsT> = ({ isBallOpen }) => {
   const isAuth = useAppSelector((state) => state.auth.isAuth);
-  const navigate = useNavigate();
   return (
     <>
       <Link to={'/music/all'}>
