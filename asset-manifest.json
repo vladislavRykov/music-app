@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/music-app/static/css/main.bb8d031b.css",
+    "main.js": "/music-app/static/js/main.88cd7760.js",
+    "static/media/pageLoader.gif": "/music-app/static/media/pageLoader.0324526fede14fafbd40.gif",
+    "static/media/allMusicBG.jpg": "/music-app/static/media/allMusicBG.af7f47195a46ecae5121.jpg",
+    "static/media/ava3.webp": "/music-app/static/media/ava3.b910c60e8c89f675c4d4.webp",
+    "static/media/imgUploadPH.jpg": "/music-app/static/media/imgUploadPH.3240ce08597bfb44d591.jpg",
+    "index.html": "/music-app/index.html",
+    "main.bb8d031b.css.map": "/music-app/static/css/main.bb8d031b.css.map",
+    "main.88cd7760.js.map": "/music-app/static/js/main.88cd7760.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bb8d031b.css",
+    "static/js/main.88cd7760.js"
+  ]
+}
