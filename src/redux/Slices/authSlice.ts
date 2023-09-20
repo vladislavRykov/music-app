@@ -5,6 +5,7 @@ import delay from '../../utils/delay';
 import { IUserData } from './../../types';
 import { totalStopMusic } from './selectedAudioSlice';
 import { AppDispatch } from '../store';
+import axios, { AxiosError } from 'axios';
 
 export const registerUser = createAsyncThunk<
   IUserData,
@@ -28,7 +29,7 @@ export const registerUser = createAsyncThunk<
 export const loginUser = createAsyncThunk<
   IUserData,
   { email: string; password: string },
-  { rejectValue: string }
+  { rejectValue: string | null }
 >('auth/loginUserStatus', async (params, { rejectWithValue }) => {
   try {
     const res = await ServerAPI.login(params);
@@ -39,10 +40,14 @@ export const loginUser = createAsyncThunk<
     localStorage.setItem('token', res.data.accessToken);
     return res.data;
   } catch (error) {
-    if (error.response) {
-      return rejectWithValue(error?.response.data.message as string);
+    // if (error.response) {
+    //   return rejectWithValue(error?.response.data.message as string);
+    // }
+    // return rejectWithValue(error.message as string);
+    if (axios.isAxiosError(error) && error.response) {
+      return rejectWithValue(error.response.data.message as string);
     }
-    return rejectWithValue(error.message as string);
+    return rejectWithValue(null);
   }
 });
 export const refreshUser = createAsyncThunk<IUserData, void, { rejectValue: string }>(

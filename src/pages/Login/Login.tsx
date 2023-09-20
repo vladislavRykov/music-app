@@ -33,10 +33,11 @@ export const Login = () => {
             email: '',
             password: '',
           }}
-          onSubmit={async (values, { setErrors }) => {
-            dispatch(loginUser(values));
+          onSubmit={async (values, { setStatus }) => {
+            const loginAction = await dispatch(loginUser(values));
+            setStatus(loginAction.payload);
           }}>
-          {({ errors, isSubmitting, touched, isValid }) => (
+          {({ errors, isSubmitting, touched, isValid, status }) => (
             <Form className={s.form}>
               <div className={s.input}>
                 <Field
@@ -67,7 +68,7 @@ export const Login = () => {
                 <label htmlFor="password">Password</label>
                 <p>{errors.password && touched.password && errors.password}</p>
               </div>
-
+              <div>{status}</div>
               <LoadingButton
                 variant="outlined"
                 loading={isFetching}
