@@ -37,7 +37,7 @@ const App: React.FC = (): React.ReactElement => {
     return <PageLoader error={errorMessage} />;
   }
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/music-app">
       <div style={styles} className={s.app}>
         <div
           style={isChanging ? { opacity: '1' } : { opacity: '0' }}
